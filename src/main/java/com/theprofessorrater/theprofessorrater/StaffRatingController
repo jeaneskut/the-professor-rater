@@ -11,8 +11,7 @@ public class StaffRatingController {
 
     private final StaffRatingRepository ratingRepository;
 
-    public StaffRatingController(
-            StaffRatingRepository ratingRepository) {
+    public StaffRatingController(StaffRatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
     }
 
