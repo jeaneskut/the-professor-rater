@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Rating - Rate CS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Add a Staff Rating</h1>
+        <a th:href="@{/}" class="add-button">Back to Staff List</a>
+    </header>
+
+    <main id="mainpart">
+        <form th:action="@{/ratings}" th:object="${rating}" method="post" novalidate>
+            <fieldset>
+                <legend>Staff Information</legend>
+
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" th:field="*{name}" maxlength="100" required>
+
+                <p class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                    Name error
+                </p>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{email}" maxlength="254" required>
+
+                <p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                    Email error
+                </p>
+
+                <label for="roleType">Role:</label>
+                <select id="roleType" th:field="*{roleType}" required>
+                    <option value="">Select a role</option>
+                    <option value="TA">Teaching Assistant</option>
+                    <option value="PROF">Professor</option>
+                    <option value="INSTRUCTOR">Instructor</option>
+                    <option value="STAFF">Staff</option>
+                </select>
+
+                <p class="field-error" id="roleType-error"
+                th:if="${#fields.hasErrors('roleType')}"
+                th:errors="*{roleType}">
+                    Role error
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Rate the Staff Member</legend>
+
+                <label for="clarity">Clarity (1–10):</label>
+                <input type="number" id="clarity" th:field="*{clarity}"
+                    min="1" max="10" step="1" required>
+
+                <p class="field-error"
+                th:if="${#fields.hasErrors('clarity')}"
+                th:errors="*{clarity}">
+                    Clarity error
+                </p>
+
+
+                <label for="niceness">Niceness (1–10):</label>
+                <input type="number" id="niceness" th:field="*{niceness}"
+                    min="1" max="10" step="1" required>
+
+                <p class="field-error"
+                th:if="${#fields.hasErrors('niceness')}"
+                th:errors="*{niceness}">
+                    Niceness error
+                </p>
+
+                <label for="knowledgeableScore">Knowledge (1–10):</label>
+                <input type="number" id="knowledgeableScore"
+                    th:field="*{knowledgeableScore}"
+                    min="1" max="10" step="1" required>
+
+                <p class="field-error"
+                th:if="${#fields.hasErrors('knowledgeableScore')}"
+                th:errors="*{knowledgeableScore}">
+                    Knowledge error
+                </p>
+
+                <label for="comment">Comment (optional):</label>
+                <textarea id="comment" th:field="*{comment}"
+                        maxlength="1000" rows="4"></textarea>
+
+                <p class="field-error"
+                th:if="${#fields.hasErrors('comment')}"
+                th:errors="*{comment}">
+                    Comment error
+                </p>
+            </fieldset>
+
+            <button type="submit" class="details-button">
+                Submit Rating
+            </button>
+
+            <p id="form-message" hidden></p>
+        </form>
+    </main>
+
+    <footer>
+        <p>Rate CS Teaching Staff &copy; 2026</p>
+    </footer>
+</body>
+</html>
