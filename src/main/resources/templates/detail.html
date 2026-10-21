@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Details - Rate CS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Staff Details</h1>
+        <a th:href="@{/}" class="add-button">Back to Staff List</a>
+    </header>
+
+    <main id="mainpart">
+        <div class="staff-card">
+            <h2 th:text="${rating.name}">Staff Name</h2>
+
+            <p class="role" th:text="${rating.roleType}">
+                Professor
+            </p>
+
+            <p> Email:
+                <span th:text="${rating.email}">staff@example.edu</span>
+            </p>
+
+            <p>
+                Clarity:
+                <strong th:text="${rating.clarity + '/10'}">9/10</strong>
+            </p>
+
+            <p>
+                Niceness:
+                <strong th:text="${rating.niceness + '/10'}">8/10</strong>
+            </p>
+
+            <p>
+                Knowledge:
+                <strong th:text="${rating.knowledgeableScore + '/10'}">10/10</strong>
+            </p>
+
+            <p>Overall Score:</p>
+
+            <p class="score"
+            th:text="${#numbers.formatDecimal((rating.clarity + rating.niceness + rating.knowledgeableScore) / 3.0, 1, 1) + '/10'}">
+                9.0/10
+            </p>
+
+            <h3>Student Comment</h3>
+
+            <p th:text="${rating.comment ?: 'No comment provided.'}">
+                This class highkey easy lmao.
+            </p>
+
+            <a th:href="@{/ratings/{id}/edit(id=${rating.id})}" class="details-button">Edit Rating</a>
+            <a href="#" id="delete-button" class="details-button">Delete Rating</a>
+            
+
+            <p id="delete-message" hidden></p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Rate CS Teaching Staff &copy; 2026</p>
+    </footer>
+</body>
+</html>

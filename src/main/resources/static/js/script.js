@@ -28,103 +28,93 @@ const staff = [
         "INSTRUCTOR", 7, 8, 9)
 ];
 
+
 const staffList = document.getElementById("staff-list");
-const searchInput = document.getElementById("search");
-const roleSelect = document.getElementById("role");
-const sortSelect = document.getElementById("sort");
-const results = document.getElementById("results");
-const message = document.getElementById("message");
 
-// Converts role codes into readable titles
-function getRoleName(role) {
-    if (role === "PROF") return "Professor";
-    if (role === "TA") return "Teaching Assistant";
-    if (role === "INSTRUCTOR") return "Instructor";
-    return "Staff";
-}
+if (staffList) {
+    const searchInput = document.getElementById("search");
+    const roleSelect = document.getElementById("role");
+    const sortSelect = document.getElementById("sort");
+    const results = document.getElementById("results");
+    const message = document.getElementById("message");
 
-// Displays the staff cards
-function showStaff() {
-    const search = searchInput.value.trim().toLowerCase();
-    const selectedRole = roleSelect.value;
-    const sort = sortSelect.value;
+    // Displays the staff cards
+    function showStaff() {
+        const search = searchInput.value.trim().toLowerCase();
+        const selectedRole = roleSelect.value;
+        const sort = sortSelect.value;
 
-    // Find staff matching the search and role
-    let filteredStaff = staff.filter(person => {
-        const matchesName = person.name.toLowerCase().includes(search);
-        const matchesRole = selectedRole === "ALL"
-            || person.role === selectedRole;
+        // Find staff matching the search and role
+        let filteredStaff = Array.from(staffList.children).filter(card => {
+            const name = card.querySelector("h3").textContent.trim();
+            const role = card.querySelector(".role").textContent.trim();
 
-        return matchesName && matchesRole;
-    });
+            const matchesName = name.toLowerCase().includes(search);
+            const matchesRole = selectedRole === "ALL"
+                || role === selectedRole;
 
-    // Sort the results
-    if (sort === "name") {
-        filteredStaff.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sort === "high") {
-        filteredStaff.sort((a, b) =>
-            b.getOverallScore() - a.getOverallScore());
-    } else if (sort === "low") {
-        filteredStaff.sort((a, b) =>
-            a.getOverallScore() - b.getOverallScore());
+            return matchesName && matchesRole;
+        });
+
+        // Sort the results
+        if (sort === "name") {
+            filteredStaff.sort((a, b) => {
+                const nameA = a.querySelector("h3").textContent.trim();
+                const nameB = b.querySelector("h3").textContent.trim();
+
+                return nameA.localeCompare(nameB);
+            });
+        } else if (sort === "high") {
+            filteredStaff.sort((a, b) => {
+                const scoreA = parseFloat(
+                    a.querySelector("strong").textContent
+                );
+                const scoreB = parseFloat(
+                    b.querySelector("strong").textContent
+                );
+
+                return scoreB - scoreA;
+            });
+        } else if (sort === "low") {
+            filteredStaff.sort((a, b) => {
+                const scoreA = parseFloat(
+                    a.querySelector("strong").textContent
+                );
+                const scoreB = parseFloat(
+                    b.querySelector("strong").textContent
+                );
+
+                return scoreA - scoreB;
+            });
+        }
+
+        // Hide cards that don't match the search or role
+        Array.from(staffList.children).forEach(card => {
+            card.hidden = !filteredStaff.includes(card);
+        });
+
+        // Move matching cards into the selected sort order
+        filteredStaff.forEach(card => {
+            staffList.appendChild(card);
+        });
+
+        // Display a message if no results match
+        message.hidden = filteredStaff.length !== 0
+            || staffList.children.length === 0;
+
+        results.textContent = "Showing " + filteredStaff.length
+            + " staff member(s).";
     }
 
-    // Clear the previous results
-    staffList.innerHTML = "";
+    // Update the page when the user changes a search or filter
+    searchInput.addEventListener("input", showStaff);
+    roleSelect.addEventListener("change", showStaff);
+    sortSelect.addEventListener("change", showStaff);
 
-    // Display a message if no results match
-    message.hidden = filteredStaff.length !== 0;
-
-    results.textContent = "Showing " + filteredStaff.length
-        + " staff member(s).";
-
-    // Create a card for each staff member
-    filteredStaff.forEach(person => {
-        const card = document.createElement("div");
-        card.className = "staff-card";
-
-        const heading = document.createElement("h3");
-        heading.textContent = person.name;
-
-        const role = document.createElement("p");
-        role.className = "role";
-        role.textContent = getRoleName(person.role);
-
-        const email = document.createElement("p");
-        email.textContent = person.email;
-
-        const score = document.createElement("p");
-        score.className = "score";
-        score.textContent = person.getOverallScore().toFixed(1) + "/10";
-
-        const breakdown = document.createElement("p");
-        breakdown.textContent = "Clarity: " + person.clarity
-            + "/10 | Niceness: " + person.niceness
-            + "/10 | Knowledge: " + person.knowledge + "/10";
-
-        const link = document.createElement("a");
-        link.className = "details-button";
-        link.href = "/detail.html";
-        link.textContent = "View Details";
-
-        card.appendChild(heading);
-        card.appendChild(role);
-        card.appendChild(email);
-        card.appendChild(score);
-        card.appendChild(breakdown);
-        card.appendChild(link);
-
-        staffList.appendChild(card);
-    });
+    // Display the initial staff list
+    showStaff();
 }
 
-// Update the page when the user changes a search or filter
-searchInput.addEventListener("input", showStaff);
-roleSelect.addEventListener("change", showStaff);
-sortSelect.addEventListener("change", showStaff);
-
-// Display the initial staff list
-showStaff();
 
 
 // Detail page: delete button
@@ -155,7 +145,6 @@ if (form) {
     const formMessage = document.getElementById("form-message");
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault();
 
         document.querySelectorAll(".field-error").forEach(function (error) {
             error.textContent = "";
@@ -169,8 +158,11 @@ if (form) {
         function showError(id, text) {
             const error = document.getElementById(id + "-error");
 
-            error.textContent = text;
-            error.hidden = false;
+            if (error) {
+                error.textContent = text;
+                error.hidden = false;
+            }
+            
             valid = false;
         }
 
@@ -201,9 +193,8 @@ if (form) {
 
         scores.forEach(function ([id, label]) {
             const input = document.getElementById(id);
-            const value = input.value;
 
-            if (value === "") {
+            if (input.value === "") {
                 showError(id, label + " score is required.");
             } else if (!input.validity.valid) {
                 showError(
@@ -220,9 +211,9 @@ if (form) {
         }
 
         if (!valid) {
+            event.preventDefault();
             formMessage.textContent = "Please correct the errors above.";
             formMessage.hidden = false;
-            return;
         }
 
         formMessage.textContent =

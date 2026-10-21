@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rate CS Teaching Staff</title>
 
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/app.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
 </head>
 <body>
     <header>
         <h1>Rate CS Teaching Staff</h1>
         <p>Student reviews for better learning.</p>
-        <a href="/create.html" class="add-button">Add a Rating</a>
+        <a th:href="@{/ratings/new}" class="add-button">Add a Rating</a>
     </header>
 
     <main id="mainpart">
@@ -45,7 +45,33 @@
         <p id="results">Showing all staff members.</p>
 
         <!-- Staff cards are added by JavaScript -->
-        <div id="staff-list"></div>
+        <div id="staff-list">
+            <article class="staff-card" th:each="rating : ${ratings}">
+                <h3 th:text="${rating.name}">Staff Name</h3>
+
+                <p class="role"
+                th:text="${rating.roleType}">
+                    Professor
+                </p>
+
+                <p>
+                    Overall Score:
+                    <strong
+                        th:text="${#numbers.formatDecimal((rating.clarity + rating.niceness + rating.knowledgeableScore) / 3.0, 1, 1)}">
+                        9.0
+                    </strong>/10
+                </p>
+
+                <a class="details-button"
+                th:href="@{/ratings/{id}(id=${rating.id})}">
+                    View Details
+                </a>
+            </article>
+        </div>
+
+        <p th:if="${#lists.isEmpty(ratings)}" id="empty-database">
+            No staff ratings have been added yet.
+        </p>
 
         <p id="message" hidden>
             No staff members found.
