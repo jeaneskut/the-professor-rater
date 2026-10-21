@@ -1,0 +1,134 @@
+
+body {
+    background-color: #f4f6fa;
+    color: #192b43;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+header {
+    background-color: #192b43;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+header h1 {
+    margin-top: 0;
+}
+
+header p {
+    color: #d5dfeb;
+}
+
+.add-button {
+    display: inline-block;
+    background-color: #dce9fc;
+    color: #192b43;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.add-button:hover {
+    background-color: white;
+}
+
+#mainpart {
+    width: 85%;
+    max-width: 1000px;
+    margin: 30px auto;
+    min-height: 400px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+fieldset {
+    background-color: white;
+    border: 1px solid #ccd5e1;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+input, select {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccd5e1;
+    border-radius: 4px;
+}
+
+input:focus, select:focus {
+    outline: 2px solid #8aafe8;
+}
+
+#results {
+    color: #52657c;
+    font-size: 14px;
+}
+
+#staff-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.staff-card {
+    background-color: white;
+    border: 1px solid #dce2eb;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.staff-card:hover {
+    border-color: #7398d1;
+}
+
+.staff-card h3 {
+    margin-top: 0;
+}
+
+.staff-card p {
+    margin: 10px 0;
+}
+
+.score {
+    color: #245ca6;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.role {
+    color: #52657c;
+    font-size: 14px;
+}
+
+.details-button {
+    display: inline-block;
+    background-color: #192b43;
+    color: white;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.details-button:hover {
+    background-color: #245ca6;
+}
+
+#message {
+    text-align: center;
+    padding: 30px;
+}
+
+footer {
+    background-color: #192b43;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 40px;
+}
