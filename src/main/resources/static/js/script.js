@@ -104,7 +104,7 @@ function showStaff() {
 
         const link = document.createElement("a");
         link.className = "details-button";
-        link.href = "/ratings/" + person.id;
+        link.href = "/detail.html";
         link.textContent = "View Details";
 
         card.appendChild(heading);
@@ -125,3 +125,109 @@ sortSelect.addEventListener("change", showStaff);
 
 // Display the initial staff list
 showStaff();
+
+
+// Detail page: delete button
+const deleteButton = document.getElementById("delete-button");
+
+if (deleteButton) {
+    const deleteMessage = document.getElementById("delete-message");
+
+    deleteButton.addEventListener("click", function () {
+        const confirmed = confirm(
+            "Are you sure you want to delete this rating?"
+        );
+
+        if (confirmed) {
+            deleteMessage.textContent =
+                "Demo only: this rating has not been deleted from a database.";
+
+            deleteMessage.hidden = false;
+        }
+    });
+}
+
+
+// Create and edit pages: form validation
+const form = document.getElementById("rating-form");
+
+if (form) {
+    const formMessage = document.getElementById("form-message");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        document.querySelectorAll(".field-error").forEach(function (error) {
+            error.textContent = "";
+            error.hidden = true;
+        });
+
+        formMessage.hidden = true;
+
+        let valid = true;
+
+        function showError(id, text) {
+            const error = document.getElementById(id + "-error");
+
+            error.textContent = text;
+            error.hidden = false;
+            valid = false;
+        }
+
+        const name = document.getElementById("name").value.trim();
+
+        if (name === "") {
+            showError("name", "Name is required.");
+        }
+
+        const emailInput = document.getElementById("email");
+        const email = emailInput.value.trim();
+
+        if (email === "") {
+            showError("email", "Email is required.");
+        } else if (!emailInput.validity.valid) {
+            showError("email", "Enter a valid email address.");
+        }
+
+        if (document.getElementById("roleType").value === "") {
+            showError("role", "Please select a role.");
+        }
+
+        const scores = [
+            ["clarity", "Clarity"],
+            ["niceness", "Niceness"],
+            ["knowledge", "Knowledge"]
+        ];
+
+        scores.forEach(function ([id, label]) {
+            const input = document.getElementById(id);
+            const value = input.value;
+
+            if (value === "") {
+                showError(id, label + " score is required.");
+            } else if (!input.validity.valid) {
+                showError(
+                    id,
+                    label + " must be a whole number from 1 to 10."
+                );
+            }
+        });
+
+        const comment = document.getElementById("comment").value;
+
+        if (comment.length > 1000) {
+            showError("comment", "Comment cannot exceed 1000 characters.");
+        }
+
+        if (!valid) {
+            formMessage.textContent = "Please correct the errors above.";
+            formMessage.hidden = false;
+            return;
+        }
+
+        formMessage.textContent =
+            "The form is valid! Saving to the database will be implemented next.";
+
+        formMessage.hidden = false;
+    });
+}
