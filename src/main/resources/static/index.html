@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate CS Teaching Staff</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/app.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Rate CS Teaching Staff</h1>
+        <p>Student reviews for better learning.</p>
+        <a href="/ratings/new" class="add-button">Add a Rating</a>
+    </header>
+
+    <main id="mainpart">
+        <h2>Teaching Staff</h2>
+
+        <!-- Search and filters -->
+        <fieldset>
+            <legend>Find teaching staff</legend>
+
+            <label for="search">Name:</label>
+            <input type="text" id="search" placeholder="Search by name">
+
+            <label for="role">Role:</label>
+            <select id="role">
+                <option value="ALL">All roles</option>
+                <option value="PROF">Professor</option>
+                <option value="TA">Teaching Assistant</option>
+                <option value="INSTRUCTOR">Instructor</option>
+                <option value="STAFF">Staff</option>
+            </select>
+
+            <label for="sort">Sort:</label>
+            <select id="sort">
+                <option value="name">Name (A-Z)</option>
+                <option value="high">Highest score</option>
+                <option value="low">Lowest score</option>
+            </select>
+        </fieldset>
+
+        <p id="results">Showing all staff members.</p>
+
+        <!-- Staff cards are added by JavaScript -->
+        <div id="staff-list"></div>
+
+        <p id="message" hidden>
+            No staff members found.
+        </p>
+    </main>
+
+    <footer>
+        <p>Rate CS Teaching Staff &copy; 2026</p>
+    </footer>
+</body>
+</html>
