@@ -17,7 +17,7 @@
         <div class="staff-card">
             <h2 th:text="${rating.name}">Staff Name</h2>
 
-            <p class="role" th:text="${rating.roleType}">
+            <p class="role" th:text="${profile.displayTitle()}">
                 Professor
             </p>
 
@@ -54,10 +54,15 @@
             </p>
 
             <a th:href="@{/ratings/{id}/edit(id=${rating.id})}" class="details-button">Edit Rating</a>
-            <a href="#" id="delete-button" class="details-button">Delete Rating</a>
-            
+            <form th:action="@{/ratings/{id}/delete(id=${rating.id})}"
+                method="post"
+                style="display: inline;"
+                onsubmit=" return confirm('Are you sure you want to delete this rating?');">
 
-            <p id="delete-message" hidden></p>
+                <button type="submit" class="details-button">
+                    Delete Rating
+                </button>
+            </form>
         </div>
     </main>
 
