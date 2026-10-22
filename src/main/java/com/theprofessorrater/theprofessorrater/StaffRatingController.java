@@ -92,6 +92,7 @@ public class StaffRatingController {
     @GetMapping("/ratings/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
         model.addAttribute("rating", findRating(id));
+        model.addAttribute("roles", RoleType.values());
         return "edit";
     }
 
