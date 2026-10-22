@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+// the controller
+// contains proper mappings for postgreSQL
 @Controller
 public class StaffRatingController {
 
@@ -38,7 +40,6 @@ public class StaffRatingController {
     @GetMapping("/ratings/create")
     public String showCreateForm(Model model) {
         model.addAttribute("rating", new StaffRating());
-        model.addAttribute("roles", RoleType.values());
         return "create";
     }
 
@@ -58,7 +59,6 @@ public class StaffRatingController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute("roles", RoleType.values());
             return "create";
         }
 
@@ -69,7 +69,6 @@ public class StaffRatingController {
                     "email",
                     "duplicate",
                     "A rating with this email already exists.");
-            model.addAttribute("roles", RoleType.values());
             return "create";
         }
 
@@ -93,7 +92,6 @@ public class StaffRatingController {
     @GetMapping("/ratings/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
         model.addAttribute("rating", findRating(id));
-        model.addAttribute("roles", RoleType.values());
         return "edit";
     }
 
@@ -118,7 +116,6 @@ public class StaffRatingController {
 
         if (result.hasErrors()) {
             submitted.setId(id);
-            model.addAttribute("roles", RoleType.values());
             return "edit";
         }
 
@@ -132,7 +129,6 @@ public class StaffRatingController {
                     "email",
                     "duplicate",
                     "A rating with this email already exists.");
-            model.addAttribute("roles", RoleType.values());
             return "edit";
         }
 

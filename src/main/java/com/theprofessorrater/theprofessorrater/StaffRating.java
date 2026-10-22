@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 public class StaffRating {
 
+    // the text under the boxes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -74,6 +75,7 @@ public class StaffRating {
         updatedAt = LocalDateTime.now();
     }
 
+    // setters and getters
     public Long getId() {
         return id;
     }

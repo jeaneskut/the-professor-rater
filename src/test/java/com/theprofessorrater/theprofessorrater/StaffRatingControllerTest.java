@@ -15,6 +15,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
+// these tests are for the controller
 @WebMvcTest(StaffRatingController.class)
 class StaffRatingControllerTest {
 
