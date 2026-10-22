@@ -6,6 +6,8 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+//these tests are for the repository/database components
 @DataJpaTest
 class StaffRatingRepositoryTest {
 
