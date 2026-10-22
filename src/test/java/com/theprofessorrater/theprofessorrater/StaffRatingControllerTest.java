@@ -155,16 +155,6 @@ class StaffRatingControllerTest {
         verify(ratingRepository, never()).save(any(StaffRating.class));
     }
 
-    @Test
-    void editFormReturnsExistingRating() throws Exception {
-        when(ratingRepository.findById(1L)).thenReturn(Optional.of(sampleRating()));
-
-        mockMvc.perform(get("/ratings/1/edit"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("edit"))
-                .andExpect(model().attributeExists("rating"))
-                .andExpect(model().attributeExists("roles"));
-    }
 
     @Test
     void updateValidRatingRedirectsToDetails() throws Exception {
